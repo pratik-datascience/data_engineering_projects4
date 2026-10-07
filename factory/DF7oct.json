@@ -1,0 +1,15 @@
+{
+	"name": "DF7oct",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "48a4e5c1-c22d-4259-a203-837e5bdc764b",
+		"tenantId": "612cedfc-1862-4903-a00b-d000f8b7d566"
+	}
+}

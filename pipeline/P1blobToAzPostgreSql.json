@@ -1,0 +1,177 @@
+{
+	"name": "P1blobToAzPostgreSql",
+	"properties": {
+		"activities": [
+			{
+				"name": "Get Metadata1P1",
+				"type": "GetMetadata",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "DsExcelMetadata1",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"childItems"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					}
+				}
+			},
+			{
+				"name": "ForEach1",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "Get Metadata1P1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('Get Metadata1P1').output.childItems",
+						"type": "Expression"
+					},
+					"isSequential": false,
+					"activities": [
+						{
+							"name": "Copy data1",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "ExcelSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									}
+								},
+								"sink": {
+									"type": "AzurePostgreSqlSink",
+									"writeBatchSize": 1000000,
+									"writeBatchTimeout": "00:30:00",
+									"writeMethod": "CopyCommand"
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"mappings": [
+										{
+											"source": {
+												"name": "OrderID",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "order_id",
+												"type": "Int32",
+												"physicalType": "integer"
+											}
+										},
+										{
+											"source": {
+												"name": "CustomerName",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "c_name",
+												"type": "String",
+												"physicalType": "character varying"
+											}
+										},
+										{
+											"source": {
+												"name": "Product",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "product",
+												"type": "String",
+												"physicalType": "character varying"
+											}
+										},
+										{
+											"source": {
+												"name": "Quantity",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "quantity",
+												"type": "Int32",
+												"physicalType": "integer"
+											}
+										},
+										{
+											"source": {
+												"name": "Amount",
+												"type": "String",
+												"physicalType": "String"
+											},
+											"sink": {
+												"name": "amount",
+												"type": "Int32",
+												"physicalType": "integer"
+											}
+										}
+									],
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "Excel1",
+									"type": "DatasetReference",
+									"parameters": {
+										"fileName": {
+											"value": "@item().name",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "AzurePostgreSqlTableP1",
+									"type": "DatasetReference"
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-10-07T06:49:11Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

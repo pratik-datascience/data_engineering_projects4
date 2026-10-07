@@ -1,0 +1,22 @@
+{
+	"name": "DsExcelMetadata1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LSAzureBlobStorageP1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sales_Feb",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"folderPath": "Sales_file",
+				"container": "input"
+			},
+			"firstRowAsHeader": false
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
