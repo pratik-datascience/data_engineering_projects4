@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "DF7oct"
+		},
+		"AzureBlobStorage1_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage2P1_connectionString": {
+			"value": ""
+		},
+		"LSAzureBlobStorageP1_connectionString": {
+			"value": ""
+		},
+		"LSPostgreSqlSinkP1_password": {
+			"value": ""
+		},
+		"LSPostgreSqlSinkP1_properties_typeProperties_server": {
+			"value": "postgre7oct.postgres.database.azure.com"
+		},
+		"LSPostgreSqlSinkP1_properties_typeProperties_database": {
+			"value": "postgres"
+		},
+		"LSPostgreSqlSinkP1_properties_typeProperties_username": {
+			"value": "postgre7oct"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
